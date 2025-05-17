@@ -3,7 +3,7 @@ layout: default
 title: Retail trades in the U.S. stock markets
 ---
 
-Introduction
+#Introduction
 Today, it is easier for retail traders to buy and sell stocks than decades ago due to improvements in financial technology. First, retail traders can enjoy more and cheaper stock data, which makes their investments more reasonable. Second, some brokers and dealers promote their zero-commission fee plan for retail traders. Third, retail traders do not necessarily need to trade a whole share, however, they can trade fractional shares, and can also trade in dollars. For example, you do not need to buy a share of Apple Inc. stock, you can buy $10 or 0.05 shares of it. It is more easier for retail traders to access the stock markets and the academics call this the democratization of stock markets.
 
 One of the broker-dealers that provides specific services for retail traders is Robinhood. Robinhood was almost the first one to promote zero-commission fee for stock trading with a very user-friendly interface. This means that traders no longer completely rely on complex figures or technical indicators to buy and sell stocks, and they can check some recommended list of stocks or public analyst ratings to do the trading. Robinhood has witnessed a surge of new users during the covid-19 pandemic when people were required to stay home. Generally, retail traders are likely to use market orders to get immediate purchase than other order types. However, retail traders’ market orders are not sent to exchanges. Their orders are internalized and executed with a wholesaler that has a contract with the Robinhood. Thus, we cannot not directly identify retail trades if the Robinhood does not disclose their proprietary data.
@@ -22,7 +22,7 @@ In traditional financial view, retail traders do not have information advantage 
 
 One of the most challenging regulatory concerns is the execution quality of retail trades. For example, retail traders might not receive the best price when their orders are about to get executed. Specifically, their buy (sell) orders might be executed at a higher (lower) price than at which they are supposed to be. Thus, identifying retail trades through the public data is helpful for us to know the execution quality of retail trades.
 
-Background
+#Background
 Generally, retail trades are hard to identify through the non-regulatory data (e.g., TAQ data) as one does not know the account-level information. The account-level data are generally hard to get from brokers and dealers. However, retail trades are likely to evolve fast especially during the high-frequency trading era. Retail traders face less capital constraint as more brokers and dealers do not charge commission fees and provide various order types for retail traders to better manage their trading strategies and inventories. Hence, identifying retail trades and know their trading patterns is important.
 
 Another relevant concept is odd lot trades. Generally, trades for fewer than 100 shares of stock are defined as odd lot trades. Traditionally, odd-lot trades and volumes are marginal and were believed to originate from retail traders and little informative. TAQ data do not include the odd-lot trades before end 2013. It is reasonable to argue that most retail trades are odd-lot trades but not vice versa. O’Hara, Yao, and Ye (2014) suggest that odd-lot trades could be primarily driven by order split by high-frequency traders to reduce price impacts. Hence, simply identifying the retail trades as odd-lot trades are not reasonable.
@@ -33,7 +33,7 @@ The key assumption of Boehmer et al. (2021) identification is retail trades exec
 
 It is worth noting that it is hard to get the ``real’’ benchmark data for the retail trades in the U.S. stock market and all of the identification methods used here are just inference. Thus, all analyses here do not suggest how exactly these identification methods can accurately measure the retail trades in the real-world scenario.
 
-Data
+#Data
 I use the daily millisecond Trade and Quote (TAQ) data to identify retail trades in the U.S. stock markets. The daily consolidated trade files record all trades occur in all trading venues for all stocks. Since retail trades occur off-exchange, so our major data is obtained from the subset with exchange code `D.’ My sample period spans from August 3, 2015 to December 31, 2017. We focus on common stocks with the CRSP share codes 10 and 11 with primary listing exchanges NYSE and NASDAQ. We exclude stocks that not experience merge, acquisition, delisting, or split (DISTCD starts with 5). We also require stocks that cannot change primary exchange, ticker symbol, or CUSIP code during the sample period. To ensure our results are not confounded by the tick size, we delete stocks with closing price greater than zero and daily low price is greater than $1. Finally, we exclude stocks whose round lot is not 100 shares, though most stocks have round lots of 100 shares. For intraday analysis, we make sure that all sample stocks have trading activities in the TAQ data. We obtain 797,181 stock-day observations, comprising 1,311 stocks.
 
 One should note that there is a structural change happens in our second subsample. The U.S. Securities and Exchange Commission (SEC) initiated a tick size pilot program in 2016. The tick size pilot generally increases tick size for stocks with low liquidity from $0.01 to $0.05. This would affect the Boehmer et al. (2021)’s algorithm as the general subpenny assumption might be violated for these stocks. Hence, I remove stocks included in the test groups G2 and G3 for the tick size pilot program, as suggested by Barber et al. (2024).
@@ -128,7 +128,7 @@ t
 
 Alternatively, Barber et al. (2024) measure the accuracy of the BJZZ (2021) algorithm. They compare the BJZZ (2021) algorithm with the Lee and Ready (1991) midquote assigning method. Specifically, they assign a trade as a buy (sell) if the execution price is greater (less) than the midpoint quote. However, they do not assign trades that execute between 40% and 60% of the National Best Bid or Offer (NBBO).
 
-Empirical results
+#Empirical results
 BJZZ (2021) identification algorithm
 I first show the summary statistics of the sampled stocks in Table 1 for closing price in USD (Panel A), dollar trading volume (million USD, Panel B), and market capitalization (million USD, Panel C). I find that the average stock price is around $54.71 and the maximum stock price is over $2,000. For dollar trading volume, on average, the stocks witness $100 million trading volume, with the maximum trading volume over $18,237 million. In terms of the market capitalization, I find it is lower than the dollar trading volume, resulting in higher turnover rates. All indicators are also summarized according to the quintile of stock’s capitalization.
 
