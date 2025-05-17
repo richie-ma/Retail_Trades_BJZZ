@@ -190,7 +190,7 @@ use a personal computer to process the data.
 As what we discussed before, we need to obtain subpenny price
 improvements of each trade executed off-exchange. Boehmer et al. (2021)
 propose an algorithm to calculate the supenny price improvements and I
-use the same notations as Boehmer et al. (2021). Suppose \\P_{it}\\ is the
+use the same notations as Boehmer et al. (2021). Suppose \\(P_{it}\\) is the
 trade price in stock $i$ at time $t$, and let $Z_{it}$ is the supenny
 price improvement with respect to the trade price. The supenny price
 improvement is defined as follows: where $mod$ is module function and
