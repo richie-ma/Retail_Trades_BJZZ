@@ -37,94 +37,53 @@ One should note that there is a structural change happens in our second subsampl
 
 The TAQ data are extracted from Wharton Research Data Service (WRDS) subscribed by the University of Illinois at Urbana-Champaign. I write a SQL query to extract the data and store them in a daily basis. Some high-performance computing nodes supported by the Illinois Campus Cluster funded by the College of Agricultural, Consumer, and Environment Sciences are used here for analyzing the data. Actually, it is hard to use a personal computer to process the data.
 
-Retail trades identification methodologies
-As what we discussed before, we need to obtain subpenny price improvements of each trade executed off-exchange. Boehmer et al. (2021) propose an algorithm to calculate the supenny price improvements and I use the same notations as Boehmer et al. (2021). Suppose P_{it} is the trade price in stock 
-i at time t and let Zi
-t
- is the supenny price improvement with respect to the trade price. The supenny price improvement is defined as follows: where 
-m
-o
-d
- is module function and 
-Z
-i
-t
-∈
-[
-0
-,
-1
-)
-. Boehmer et al. (2021) implement the following rules to asses the trade direction of retail trades: If 
-Z
-i
-t
- is in the interval 
-(
-0
-,
-0.4
-)
-, this trade is identified as a retail sell trade; If 
-Z
-i
-t
- is in the interval 
-(
-0.6
-,
-1
-)
-, this trade is identified as a retail buy trade; If 
-Z
-i
-t
- is in the interval 
-[
-0.4
-,
-0.6
-]
-, this trade is not identified as either buy or sell retail trade.
-
-In terms of 
-Z
-i
-t
-∈
-[
-0.4
-,
-0.6
-]
-, Boehmer et al. (2021) conservatively do not assign any trades as retail trades. The major concern could be midpoint trades occur in the dark markets. Trades in dark markets generally occur at the midpoint prices, so this fact would confound the retail trade identification.
-
-One should be note that the module function in some software might not be easy to deal with. The plain definition in Boehmer et al. (2021) is not practical in the real-world scenario. The price in the raw data is subject to floating point precision issue. Specifically, the four digits after the decimal might not be stored as the exact four digits. Hence, I need to deal with this problem by rounding the price to four digits. Conservatively, the module function should be based on integers instead of fractions. Hence, in the real programming, one should better use 
-Z
-i
-t
-≡
-m
-o
-d
-(
-100
-×
-P
-i
-t
-,
-1
-)
-, which would give the same result as the previous equation.
+# Retail trades identification methodologies
+As what we discussed before, we need to obtain subpenny price improvements of each trade executed off-exchange. Boehmer et al. (2021) propose an algorithm to calculate the supenny price improvements. Please see details in Boehmer et al. (2021).
 
 Alternatively, Barber et al. (2024) measure the accuracy of the BJZZ (2021) algorithm. They compare the BJZZ (2021) algorithm with the Lee and Ready (1991) midquote assigning method. Specifically, they assign a trade as a buy (sell) if the execution price is greater (less) than the midpoint quote. However, they do not assign trades that execute between 40% and 60% of the National Best Bid or Offer (NBBO).
 
 # Empirical results
-BJZZ (2021) identification algorithm
+## BJZZ (2021) identification algorithm
 I first show the summary statistics of the sampled stocks in Table 1 for closing price in USD (Panel A), dollar trading volume (million USD, Panel B), and market capitalization (million USD, Panel C). I find that the average stock price is around $54.71 and the maximum stock price is over $2,000. For dollar trading volume, on average, the stocks witness $100 million trading volume, with the maximum trading volume over $18,237 million. In terms of the market capitalization, I find it is lower than the dollar trading volume, resulting in higher turnover rates. All indicators are also summarized according to the quintile of stock’s capitalization.
 
-Next, I report the summary statistics of identified retail trades by BJZZ (2021) algorithm in Table 2. Like what I mentioned before, the BJZZ algorithm relies on the range of subpenny of trades to identify whether a trade is initiated by retail traders. Panel A of Table 2 shows both the round-lot and odd-lot retail trades. The round lot here is defined as trades that are greater than 100 shares. We find that for all stock-day observations, the average share volume is around 152 thousand and the average dollar trading volume is around 7 million dollars. However, one should note that the number of retail trades are not very large. In our sample, we find the average number of trades is around 510, which means that a single retail trade might be a large size. Moreover, the standard deviation of retail trades is very high, which may imply that retail traders might highly focus on some specific popular stocks.
+| Panel | Group         | Mean   | Std    | Min  | P25    | Med    | P75    | Max      | N       |
+| ----- | ------------- | ------ | ------ | ---- | ------ | ------ | ------ | -------- | ------- |
+| A     | All           | 54.71  | 78.61  | 1.00 | 16.56  | 36.65  | 68.50  | 2049.00  | 797,181 |
+| A     | Market cap Q1 | 12.93  | 11.58  | 1.00 | 4.60   | 9.44   | 17.56  | 100.05   | 159,558 |
+| A     | Market cap Q2 | 31.82  | 37.14  | 1.23 | 14.02  | 23.87  | 39.85  | 689.35   | 159,558 |
+| A     | Market cap Q3 | 52.09  | 52.43  | 1.59 | 23.72  | 41.74  | 65.64  | 762.27   | 158,949 |
+| A     | Market cap Q4 | 75.15  | 67.76  | 1.43 | 35.45  | 56.91  | 91.24  | 757.77   | 159,558 |
+| A     | Market cap Q5 | 101.54 | 130.94 | 2.45 | 47.90  | 74.59  | 115.34 | 2049.00  | 159,558 |
+| B     | All           | 100.43 | 274.63 | 0.00 | 6.03   | 29.11  | 94.33  | 18237.56 | 797,181 |
+| B     | Market cap Q1 | 2.87   | 7.41   | 0.00 | 0.34   | 1.08   | 3.00   | 1034.98  | 159,558 |
+| B     | Market cap Q2 | 17.34  | 27.64  | 0.17 | 4.69   | 9.63   | 19.65  | 1294.06  | 159,558 |
+| B     | Market cap Q3 | 40.51  | 50.89  | 0.40 | 16.80  | 28.31  | 47.79  | 2304.03  | 158,949 |
+| B     | Market cap Q4 | 84.02  | 92.96  | 0.95 | 38.95  | 63.25  | 100.96 | 3485.04  | 159,558 |
+| B     | Market cap Q5 | 357.20 | 527.81 | 9.04 | 131.55 | 213.27 | 381.11 | 18237.56 | 159,558 |
+| C     | All           | 14.76  | 42.35  | 0.01 | 0.87   | 3.47   | 10.05  | 904.87   | 797,181 |
+| C     | Market cap Q1 | 0.29   | 0.20   | 0.01 | 0.13   | 0.26   | 0.41   | 2.65     | 159,558 |
+| C     | Market cap Q2 | 1.33   | 0.61   | 0.19 | 0.86   | 1.22   | 1.69   | 7.07     | 159,558 |
+| C     | Market cap Q3 | 3.57   | 1.10   | 0.48 | 2.76   | 3.49   | 4.26   | 11.05    | 158,949 |
+| C     | Market cap Q4 | 8.29   | 2.83   | 0.86 | 6.12   | 7.87   | 10.09  | 23.60    | 159,558 |
+| C     | Market cap Q5 | 60.27  | 79.52  | 5.98 | 19.90  | 31.18  | 61.62  | 904.87   | 159,558 |
+
+Next, I report the summary statistics of identified retail trades by BJZZ (2021) algorithm in Table 2. Like what I mentioned before, the BJZZ algorithm relies on the range of subpenny of trades to identify whether a trade is initiated by retail traders. Panel A of Table 2 shows both the round-lot and odd-lot retail trades. The round lot here is defined as trades that are greater than 100 shares. We find that for all stock-day observations, the average share volume is around 152 thousand and the average dollar trading volume is around 7 million dollars. However, one should note that the number of retail trades are not very large. In our sample, we find the average number of trades is around 510, which means that a single 
+retail trade might be a large size. Moreover, the standard deviation of retail trades is very high, which may imply that retail traders might highly focus on some specific popular stocks.
+
+| Panel | Metric                           | Mean   | Std    | P25    | Med   | P75   | N       |
+| ----- | -------------------------------- | ------ | ------ | ------ | ----- | ----- | ------- |
+| A     | Share volume (× 1,000)           | 152.15 | 632.12 | 7.71   | 28.82 | 94.97 | 791,464 |
+| A     | Number of trades                 | 510    | 1340   | 52     | 184   | 459   | 791,464 |
+| A     | Dollar volume (million)          | 6.98   | 36.57  | 0.20   | 1.06  | 3.84  | 791,464 |
+| A     | Order imbalance (Share vol., %)  | −0.50  | 33.18  | −16.71 | −0.02 | 15.69 | 791,464 |
+| A     | Order imbalance (Ntrd, %)        | −0.55  | 26.11  | −12.14 | 0.00  | 11.11 | 791,464 |
+| A     | Order imbalance (Dollar vol., %) | −0.48  | 33.18  | −16.70 | −0.02 | 15.71 | 791,464 |
+| B     | Share volume (× 1,000)           | 5.78   | 16.10  | 0.47   | 1.68  | 4.69  | 791,464 |
+| B     | Number of trades                 | 220    | 602    | 17     | 65    | 180   | 791,464 |
+| B     | Dollar volume (million)          | 0.55   | 3.31   | 0.01   | 0.06  | 0.29  | 791,464 |
+| B     | Order imbalance (Share vol., %)  | −0.52  | 39.93  | −18.39 | 0.38  | 17.41 | 791,464 |
+| B     | Order imbalance (Ntrd, %)        | −1.59  | 35.54  | −16.98 | 0.00  | 13.51 | 791,464 |
+| B     | Order imbalance (Dollar vol., %) | −0.50  | 39.93  | −18.37 | 0.40  | 17.43 | 791,464 |
 
 I also focus on the order imbalance of retail trades. The order imbalance measures the price pressure, which focuses on the difference between the buyer-initiated trades and seller-initiated trades. I try different indicators, including the share volume, number of trades, the dollar trading volume. Consistent to Boehmer et al. (2021), I find the average order imbalance is around 0, which indicates that there is no such a huge difference between buyer-initiated trades and seller-initiated trades. The three indicators also yield a qualitatively similar result.
 
@@ -132,27 +91,26 @@ Panel B of Table 2 reports the results for the odd-lot only. Again, the odd-lot 
 
 I also summarize the results according to the market capitalization and they are reported in Table 3 where Panel A shows the number of trades and Panel B shoes the dollar trading volume. Consistent to my expectation, more retail trades are likely to occur for large-cap stocks, from 82 for the lowest-cap to 1,597 for the largest-cap, on average. Panel B also shows the similar pattern. The average dollar trading volume for the lowest-cap stocks is 0.26 million while this number of the largest-cap stocks is 27.11 million. My results reveal that retail traders are likely to trade large-cap stocks instead of low-cap stocks.
 
-Since the retail traders are supposed to receive the subpenny price improvements if their market orders are not sent to the exchange, readers may like to know the distribution of subpenny portions of the retail trades. I summarize the results in Figure 1 and my results are consistent to Boehmer et al. (2021). It is obvious that retail traders are more likely to receive subpenny price improvements that are either within 
-(
-0
-,
-0.1
-]
- or 
-(
-0.9
-,
-1
-)
- than some other subpenny ranges. Furthermore, we find that the buyer-initiated trades (with subpenny within in $(0.6, 1)$) are liekly to receive a relatively higher subpeeny price improvements and similar logic can be applied for seller-initiated trades (with subpenny within 
-(
-0
-,
-0.1
-]
-) as well.
+| Panel | Statistic                           | Market Cap Q1 | Market Cap Q2 | Market Cap Q3 | Market Cap Q4 | Market Cap Q5 |
+| ----- | ----------------------------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| A     | **Number of Trades**                |               |               |               |               |               |
+|       | Mean                                | 82            | 187           | 273           | 395           | 1597          |
+|       | Std                                 | 269           | 451           | 595           | 784           | 2476          |
+|       | P25                                 | 8             | 22            | 85            | 172           | 516           |
+|       | Median                              | 22            | 66            | 153           | 269           | 892           |
+|       | P75                                 | 68            | 191           | 274           | 421           | 1707          |
+|       | N                                   | 154,464       | 158,938       | 158,946       | 159,558       | 159,558       |
+| B     | **Dollar Trading Volume (Million)** |               |               |               |               |               |
+|       | Mean                                | 0.26          | 1.10          | 2.16          | 3.99          | 27.11         |
+|       | Std                                 | 1.02          | 3.61          | 6.69          | 11.01         | 77.05         |
+|       | P25                                 | 0.02          | 0.09          | 0.46          | 1.18          | 4.97          |
+|       | Median                              | 0.05          | 0.29          | 0.91          | 2.08          | 9.87          |
+|       | P75                                 | 0.18          | 0.86          | 1.83          | 3.79          | 22.45         |
+|       | N                                   | 154,464       | 158,938       | 158,946       | 159,558       | 159,558       |
 
-Subpenny proportion: BJZZ (2021) identification algorithm.
+Since the retail traders are supposed to receive the subpenny price improvements if their market orders are not sent to the exchange, readers may like to know the distribution of subpenny portions of the retail trades. I summarize the results in Figure 1 and my results are consistent to Boehmer et al. (2021). It is obvious that retail traders are more likely to receive subpenny price improvements that are either within (0,0.1] or (0.9,1) than some other subpenny ranges. Furthermore, we find that the buyer-initiated trades (with subpenny within in $(0.6, 1)$) are liekly to receive a relatively higher subpeeny price improvements and similar logic can be applied for seller-initiated trades (with subpenny within (0, 0.1]) as well.
+
+## Subpenny proportion: BJZZ (2021) identification algorithm
 One may believe that the subpenny proportion might be related to the market capitalization. Thus, I also summarize my subpenny results based on the market capitalization. The result is shown in Figure 2. It is obvious that the distribution of subpenny groups is consistent for all stocks with different market capitalization. More importantly, we find that this subpenny price improvements are not likely to be proportional to the stock price. Specifically, I expect that the subpenny price improvements become lower for high-priced stocks compared to low-priced stocks.
 
 Subpenny proportion based on market capitalization: BJZZ (2021) identification algorithm.
