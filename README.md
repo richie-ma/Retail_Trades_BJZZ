@@ -177,7 +177,6 @@ Finally, I provide another evidence about the same identified retail trade direc
 
 ![Figure 4](images/Figure4.png)
 
-The average proportion of the same identified retail trade direction based on trade location.
 # Conclusions
 Recently, retail trades have received more attention. Due to the democratization of retail trading, especially the popularity of Robinhood app, retail traders now can buy and sell stocks more easily than before with no omission fees. The retail traders’ market orders are not sent to exchanges to get executed, however, they are internalized by the wholesalers that have signed contracts with retail broker-dealers with subpenny price improvements compared to the NBBO. Based on the subpenny characteristics of the retail trades, Boehmer et al. (2021) propose a method to identify retail trades from public data.
 
