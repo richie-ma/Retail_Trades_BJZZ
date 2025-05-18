@@ -110,7 +110,7 @@ I also summarize the results according to the market capitalization and they are
 
 Since the retail traders are supposed to receive the subpenny price improvements if their market orders are not sent to the exchange, readers may like to know the distribution of subpenny portions of the retail trades. I summarize the results in Figure 1 and my results are consistent to Boehmer et al. (2021). It is obvious that retail traders are more likely to receive subpenny price improvements that are either within (0,0.1] or (0.9,1) than some other subpenny ranges. Furthermore, we find that the buyer-initiated trades (with subpenny within in $(0.6, 1)$) are liekly to receive a relatively higher subpeeny price improvements and similar logic can be applied for seller-initiated trades (with subpenny within (0, 0.1]) as well.
 
-![](images/Figure1.png)
+<img src="images/Figure1.png"  width="800">
 
 ## Subpenny proportion: BJZZ (2021) identification algorithm
 One may believe that the subpenny proportion might be related to the market capitalization. Thus, I also summarize my subpenny results based on the market capitalization. The result is shown in Figure 2. It is obvious that the distribution of subpenny groups is consistent for all stocks with different market capitalization. More importantly, we find that this subpenny price improvements are not likely to be proportional to the stock price. Specifically, I expect that the subpenny price improvements become lower for high-priced stocks compared to low-priced stocks.
