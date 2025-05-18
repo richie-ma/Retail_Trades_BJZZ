@@ -38,13 +38,8 @@ One should note that there is a structural change happens in our second subsampl
 The TAQ data are extracted from Wharton Research Data Service (WRDS) subscribed by the University of Illinois at Urbana-Champaign. I write a SQL query to extract the data and store them in a daily basis. Some high-performance computing nodes supported by the Illinois Campus Cluster funded by the College of Agricultural, Consumer, and Environment Sciences are used here for analyzing the data. Actually, it is hard to use a personal computer to process the data.
 
 Retail trades identification methodologies
-As what we discussed before, we need to obtain subpenny price improvements of each trade executed off-exchange. Boehmer et al. (2021) propose an algorithm to calculate the supenny price improvements and I use the same notations as Boehmer et al. (2021). Suppose \(P_{it}\) is the trade price in stock 
-i
- at time 
-t
-, and let 
-Z
-i
+As what we discussed before, we need to obtain subpenny price improvements of each trade executed off-exchange. Boehmer et al. (2021) propose an algorithm to calculate the supenny price improvements and I use the same notations as Boehmer et al. (2021). Suppose P_{it} is the trade price in stock 
+i at time t and let Zi
 t
  is the supenny price improvement with respect to the trade price. The supenny price improvement is defined as follows: where 
 m
