@@ -19,7 +19,7 @@ In traditional financial view, retail traders do not have information advantage 
 
 One of the most challenging regulatory concerns is the execution quality of retail trades. For example, retail traders might not receive the best price when their orders are about to get executed. Specifically, their buy (sell) orders might be executed at a higher (lower) price than at which they are supposed to be. Thus, identifying retail trades through the public data is helpful for us to know the execution quality of retail trades.
 
-# Background
+## Background
 Generally, retail trades are hard to identify through the non-regulatory data (e.g., TAQ data) as one does not know the account-level information. The account-level data are generally hard to get from brokers and dealers. However, retail trades are likely to evolve fast especially during the high-frequency trading era. Retail traders face less capital constraint as more brokers and dealers do not charge commission fees and provide various order types for retail traders to better manage their trading strategies and inventories. Hence, identifying retail trades and know their trading patterns is important.
 
 Another relevant concept is odd lot trades. Generally, trades for fewer than 100 shares of stock are defined as odd lot trades. Traditionally, odd-lot trades and volumes are marginal and were believed to originate from retail traders and little informative. TAQ data do not include the odd-lot trades before end 2013. It is reasonable to argue that most retail trades are odd-lot trades but not vice versa. O’Hara, Yao, and Ye (2014) suggest that odd-lot trades could be primarily driven by order split by high-frequency traders to reduce price impacts. Hence, simply identifying the retail trades as odd-lot trades are not reasonable.
@@ -30,20 +30,20 @@ The key assumption of Boehmer et al. (2021) identification is retail trades exec
 
 It is worth noting that it is hard to get the ``real’’ benchmark data for the retail trades in the U.S. stock market and all of the identification methods used here are just inference. Thus, all analyses here do not suggest how exactly these identification methods can accurately measure the retail trades in the real-world scenario.
 
-# Data
+## Data
 I use the daily millisecond Trade and Quote (TAQ) data to identify retail trades in the U.S. stock markets. The daily consolidated trade files record all trades occur in all trading venues for all stocks. Since retail trades occur off-exchange, so our major data is obtained from the subset with exchange code `D.’ My sample period spans from August 3, 2015 to December 31, 2017. We focus on common stocks with the CRSP share codes 10 and 11 with primary listing exchanges NYSE and NASDAQ. We exclude stocks that not experience merge, acquisition, delisting, or split (DISTCD starts with 5). We also require stocks that cannot change primary exchange, ticker symbol, or CUSIP code during the sample period. To ensure our results are not confounded by the tick size, we delete stocks with closing price greater than zero and daily low price is greater than $1. Finally, we exclude stocks whose round lot is not 100 shares, though most stocks have round lots of 100 shares. For intraday analysis, we make sure that all sample stocks have trading activities in the TAQ data. We obtain 797,181 stock-day observations, comprising 1,311 stocks.
 
 One should note that there is a structural change happens in our second subsample. The U.S. Securities and Exchange Commission (SEC) initiated a tick size pilot program in 2016. The tick size pilot generally increases tick size for stocks with low liquidity from $0.01 to $0.05. This would affect the Boehmer et al. (2021)’s algorithm as the general subpenny assumption might be violated for these stocks. Hence, I remove stocks included in the test groups G2 and G3 for the tick size pilot program, as suggested by Barber et al. (2024).
 
 The TAQ data are extracted from Wharton Research Data Service (WRDS) subscribed by the University of Illinois at Urbana-Champaign. I write a SQL query to extract the data and store them in a daily basis. Some high-performance computing nodes supported by the Illinois Campus Cluster funded by the College of Agricultural, Consumer, and Environment Sciences are used here for analyzing the data. Actually, it is hard to use a personal computer to process the data.
 
-# Retail trades identification methodologies
+## Retail trades identification methodologies
 As what we discussed before, we need to obtain subpenny price improvements of each trade executed off-exchange. Boehmer et al. (2021) propose an algorithm to calculate the supenny price improvements. Please see details in Boehmer et al. (2021).
 
 Alternatively, Barber et al. (2024) measure the accuracy of the BJZZ (2021) algorithm. They compare the BJZZ (2021) algorithm with the Lee and Ready (1991) midquote assigning method. Specifically, they assign a trade as a buy (sell) if the execution price is greater (less) than the midpoint quote. However, they do not assign trades that execute between 40% and 60% of the National Best Bid or Offer (NBBO).
 
-# Empirical results
-## BJZZ (2021) identification algorithm
+## Empirical results
+### BJZZ (2021) identification algorithm
 I first show the summary statistics of the sampled stocks in Table 1 for closing price in USD (Panel A), dollar trading volume (million USD, Panel B), and market capitalization (million USD, Panel C). I find that the average stock price is around $54.71 and the maximum stock price is over $2,000. For dollar trading volume, on average, the stocks witness $100 million trading volume, with the maximum trading volume over $18,237 million. In terms of the market capitalization, I find it is lower than the dollar trading volume, resulting in higher turnover rates. All indicators are also summarized according to the quintile of stock’s capitalization.
 
 | Panel | Group         | Mean   | Std    | Min  | P25    | Med    | P75    | Max      | N       |
@@ -112,7 +112,7 @@ Since the retail traders are supposed to receive the subpenny price improvements
 
 ![Figure 1](images/Figure1.png)
 
-## Subpenny proportion: BJZZ (2021) identification algorithm
+### Subpenny proportion: BJZZ (2021) identification algorithm
 One may believe that the subpenny proportion might be related to the market capitalization. Thus, I also summarize my subpenny results based on the market capitalization. The result is shown in Figure 2. It is obvious that the distribution of subpenny groups is consistent for all stocks with different market capitalization. More importantly, we find that this subpenny price improvements are not likely to be proportional to the stock price. Specifically, I expect that the subpenny price improvements become lower for high-priced stocks compared to low-priced stocks.
 
 ![Figure 2](images/Figure2.png)
@@ -177,12 +177,12 @@ Finally, I provide another evidence about the same identified retail trade direc
 
 ![Figure 4](images/Figure4.png)
 
-# Conclusions
+## Conclusions
 Recently, retail trades have received more attention. Due to the democratization of retail trading, especially the popularity of Robinhood app, retail traders now can buy and sell stocks more easily than before with no omission fees. The retail traders’ market orders are not sent to exchanges to get executed, however, they are internalized by the wholesalers that have signed contracts with retail broker-dealers with subpenny price improvements compared to the NBBO. Based on the subpenny characteristics of the retail trades, Boehmer et al. (2021) propose a method to identify retail trades from public data.
 
 Using BJZZ (2021) methods, I successfully identify retail trades from the public data and find most retail trades receive the subpenny price improvements either less than $0.001 or greater than $0.009. This project compares the BJZZ (2021) identification algorithm and the midquote assigning method. I find that these two methods provide similar misidentification rates, while the rate of BJZZ (2021) is slightly higher than that of miquote assigning. However, about 80% of trades can be identified with the same trading direction, and it also depends on the trade location. Retail trades that occur near the NBBO is less likely to be assigned in the same direction from the two methods, compared to other trade locations.
 
-# References
+## References
 
 Barber, Brad M., Xing Huang, Philippe Jorion, Terrance Odean, and Christopher Schwarz. 2024. “A (Sub)penny for Your Thoughts: Tracking Retail Investor Activity in TAQ.” Journal of Finance 79: 2403–27.
 
