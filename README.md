@@ -1,5 +1,5 @@
-
-# Introduction
+# Retail trades in the U.S. stock markets
+## Introduction
 
 Today, it is easier for retail traders to buy and sell stocks than decades ago due to improvements in financial technology. First, retail traders can enjoy more and cheaper stock data, which makes their investments more reasonable. Second, some brokers and dealers promote their zero-commission fee plan for retail traders. Third, retail traders do not necessarily need to trade a whole share, however, they can trade fractional shares, and can also trade in dollars. For example, you do not need to buy a share of Apple Inc. stock, you can buy $10 or 0.05 shares of it. It is more easier for retail traders to access the stock markets and the academics call this the democratization of stock markets.
 
@@ -117,12 +117,55 @@ Subpenny proportion based on market capitalization: BJZZ (2021) identification a
 Comparison between the BJZZ (2021) algorithm and midquote assigning methods
 In this section, I would like to compare the identification methods of BJZZ (2021) and the midquote assigning methods. Note that all retail trades are identified from the off-exchange trades by different identification methods. Hence, we define the identification rate as the number of identified retail trades relative to the total number of off-exchange trades. I report the results in Table 4. We find that the two methods can identify the retail trades from the off-exchange trades with a similar rate. On average, BJZZ (2021) can identify 43% of off-exchange trades as retail while this number is a little higher for the midquote assigning method, 49%. Furthermore, we find the midquote assigning methods can also identify more retail trades for different stock market capitalization. This result reveals that the execution prices of retail trades are indeed based on the NBBO, otherwise, the two methods would not provide similar results.
 
+| Panel | Group                       | Mean | Std  | Min  | P25  | Med  | P75  | Max  | N       |
+| ----- | --------------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------- |
+| A     | **BJZZ (2021) Algorithm**   |      |      |      |      |      |      |      |         |
+|       | All                         | 0.43 | 0.21 | 0.00 | 0.27 | 0.43 | 0.58 | 1.00 | 796,293 |
+|       | Market cap Q1               | 0.43 | 0.28 | 0.00 | 0.19 | 0.41 | 0.65 | 1.00 | 158,681 |
+|       | Market cap Q2               | 0.34 | 0.20 | 0.00 | 0.17 | 0.32 | 0.48 | 1.00 | 159,547 |
+|       | Market cap Q3               | 0.41 | 0.18 | 0.00 | 0.27 | 0.41 | 0.54 | 1.00 | 158,949 |
+|       | Market cap Q4               | 0.45 | 0.16 | 0.03 | 0.33 | 0.46 | 0.57 | 0.95 | 159,558 |
+|       | Market cap Q5               | 0.51 | 0.16 | 0.03 | 0.39 | 0.52 | 0.64 | 0.91 | 159,558 |
+| B     | **NBBO Midquote Algorithm** |      |      |      |      |      |      |      |         |
+|       | All                         | 0.49 | 0.22 | 0.00 | 0.31 | 0.50 | 0.66 | 1.00 | 796,293 |
+|       | Market cap Q1               | 0.51 | 0.27 | 0.00 | 0.29 | 0.50 | 0.73 | 1.00 | 158,681 |
+|       | Market cap Q2               | 0.41 | 0.22 | 0.00 | 0.23 | 0.39 | 0.58 | 1.00 | 159,547 |
+|       | Market cap Q3               | 0.48 | 0.20 | 0.01 | 0.31 | 0.50 | 0.64 | 1.00 | 158,949 |
+|       | Market cap Q4               | 0.51 | 0.19 | 0.04 | 0.36 | 0.54 | 0.66 | 1.00 | 159,558 |
+|       | Market cap Q5               | 0.54 | 0.18 | 0.03 | 0.41 | 0.56 | 0.68 | 0.95 | 159,558 |
+
 Following Barber et al. (2024), I also assess the trade location of these buy and sell retail trades identified by the miquote assigning methods. The trade location is defined as the distance between the trade price and the bid price divided by the distance between the ask price and the bid price. According to this definition, a higher (lower) trade price indicates a larger (smaller) trade location for buyer (seller)-initiated trades. I show the distribution of retail trade locations in Figure 3. In terms of buy trades, we find almost 50% of them tend to cluster just below the best offer price, but still some retail trades are near or even below the NBBO. Similarly, for sell trades, we find almost half of them tend to cluster just above the best bid price, but still some of trades execute near or even above the midpoint price. This may reveal that retail trades are more likely to occur near the best bid or the best offer price, instead of somewhere around the midpoint price.
 
 Trade location: Buy and sell trades.
 I now compare the identification rate between the BJZZ (2021) and the midquote assigning methods. I focus on the misidentification rates of the both two methods. For example, the misidentification rate of the BJZZ (2021) algorithm is calculated as the number of retail trades identified by the NBBO midquote assigning fail to be identified by the BJZZ (2021) algorithm relative to the total number of retail trades identified by the NBBO midquote assigning. The misidentification rate of the NBBO midquote assigning is defined analogously. I report the corresponding results in Table 5 where Panel A shows the misidentification rate for BJZZ (2021) algorithm and Panel B shows that for the NBBO midquote assigning. I find that the misidentification rate of BJZZ (2021) algorithm is higher than that of the NBBO miduqote assigning. Speciifcally, the average misidentification rate of BJZZ (2021) is 22% while that for the NBBO miquote assigning method is only 11%. I also summarize the results based on the stock capitalization. I find that the misidentification rate decreases wih the stock capitalization increasing. For the BJZZ (2021) misidentification, the rate decreases from 30% for the highest-cap stocks to 12% for the lowest-cap stocks , while 16% to 8% for the NBBO miduqote assigning method.
 
+| Panel | Group                       | Mean | Std  | Min  | P25  | Med  | P75  | Max  | N       |
+| ----- | --------------------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------- |
+| A     | **BJZZ (2021) Algorithm**   |      |      |      |      |      |      |      |         |
+|       | All                         | 0.22 | 0.20 | 0.00 | 0.06 | 0.18 | 0.31 | 1.00 | 794,650 |
+|       | Market cap Q1               | 0.30 | 0.28 | 0.00 | 0.06 | 0.22 | 0.50 | 1.00 | 157,136 |
+|       | Market cap Q2               | 0.29 | 0.24 | 0.00 | 0.08 | 0.24 | 0.45 | 1.00 | 159,449 |
+|       | Market cap Q3               | 0.21 | 0.16 | 0.00 | 0.08 | 0.19 | 0.30 | 1.00 | 158,949 |
+|       | Market cap Q4               | 0.18 | 0.12 | 0.00 | 0.07 | 0.17 | 0.26 | 0.81 | 159,558 |
+|       | Market cap Q5               | 0.12 | 0.10 | 0.00 | 0.02 | 0.11 | 0.19 | 0.77 | 159,558 |
+| B     | **NBBO Midquote Assigning** |      |      |      |      |      |      |      |         |
+|       | All                         | 0.11 | 0.12 | 0.00 | 0.03 | 0.08 | 0.14 | 1.00 | 791,266 |
+|       | Market cap Q1               | 0.16 | 0.19 | 0.00 | 0.01 | 0.09 | 0.23 | 1.00 | 154,321 |
+|       | Market cap Q2               | 0.14 | 0.15 | 0.00 | 0.03 | 0.09 | 0.20 | 1.00 | 158,884 |
+|       | Market cap Q3               | 0.10 | 0.08 | 0.00 | 0.04 | 0.08 | 0.13 | 1.00 | 158,945 |
+|       | Market cap Q4               | 0.09 | 0.06 | 0.00 | 0.04 | 0.08 | 0.13 | 1.00 | 159,558 |
+|       | Market cap Q5               | 0.08 | 0.06 | 0.00 | 0.03 | 0.07 | 0.12 | 0.63 | 159,558 |
+
 Since the two methods could also identify whether a retail trade is a buyer- or seller-initiated trade, it is interesting know their capabilities. I calculate the proportion of same identified retail trade directions between the two methods. Specifically, the proportion is calculated as the number of retail trades whose trade directions are identified identically between the BJZZ (2021) and the NBBO midquote assigning, relative to the total number of retail trades that are both identified by the two algorithms. I report the results in Table 6. Obviously, the two methods can arrive at a consensus for about 81% retail trades on average. I also summarize my results based on stock capitalization and find that the proportion increases with the capitalization increasing.
+
+| Group             | Mean | Std  | Min  | P25  | Med  | P75  | Max  | N       |
+| ----------------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------- |
+| **All**           | 0.81 | 0.22 | 0.00 | 0.76 | 0.87 | 0.97 | 1.00 | 788,309 |
+| **Market cap Q1** | 0.70 | 0.31 | 0.00 | 0.50 | 0.83 | 0.97 | 1.00 | 151,964 |
+| **Market cap Q2** | 0.73 | 0.28 | 0.00 | 0.51 | 0.83 | 0.97 | 1.00 | 158,297 |
+| **Market cap Q3** | 0.84 | 0.16 | 0.00 | 0.78 | 0.86 | 0.96 | 1.00 | 158,932 |
+| **Market cap Q4** | 0.87 | 0.10 | 0.34 | 0.80 | 0.87 | 0.96 | 1.00 | 159,558 |
+| **Market cap Q5** | 0.89 | 0.09 | 0.43 | 0.82 | 0.91 | 0.99 | 1.00 | 159,558 |
 
 Finally, I provide another evidence about the same identified retail trade direction based on the trade location and the result is shown in Figure 4. Consistent to Figures Figure 1 and Figure 2, we find that the two methods perform poorly when retail trades are executed close to the midpoint price, and the average proportion is just above 40%. However, the retail trades that are executed close to either best bid or best offer prices are more likely to be assigned the same trading direction, which is almost 100%.
 
