@@ -115,6 +115,8 @@ Since the retail traders are supposed to receive the subpenny price improvements
 ## Subpenny proportion: BJZZ (2021) identification algorithm
 One may believe that the subpenny proportion might be related to the market capitalization. Thus, I also summarize my subpenny results based on the market capitalization. The result is shown in Figure 2. It is obvious that the distribution of subpenny groups is consistent for all stocks with different market capitalization. More importantly, we find that this subpenny price improvements are not likely to be proportional to the stock price. Specifically, I expect that the subpenny price improvements become lower for high-priced stocks compared to low-priced stocks.
 
+![Figure 2](images/Figure2.png)
+
 Subpenny proportion based on market capitalization: BJZZ (2021) identification algorithm.
 Comparison between the BJZZ (2021) algorithm and midquote assigning methods
 In this section, I would like to compare the identification methods of BJZZ (2021) and the midquote assigning methods. Note that all retail trades are identified from the off-exchange trades by different identification methods. Hence, we define the identification rate as the number of identified retail trades relative to the total number of off-exchange trades. I report the results in Table 4. We find that the two methods can identify the retail trades from the off-exchange trades with a similar rate. On average, BJZZ (2021) can identify 43% of off-exchange trades as retail while this number is a little higher for the midquote assigning method, 49%. Furthermore, we find the midquote assigning methods can also identify more retail trades for different stock market capitalization. This result reveals that the execution prices of retail trades are indeed based on the NBBO, otherwise, the two methods would not provide similar results.
@@ -137,6 +139,8 @@ In this section, I would like to compare the identification methods of BJZZ (202
 |       | Market cap Q5               | 0.54 | 0.18 | 0.03 | 0.41 | 0.56 | 0.68 | 0.95 | 159,558 |
 
 Following Barber et al. (2024), I also assess the trade location of these buy and sell retail trades identified by the miquote assigning methods. The trade location is defined as the distance between the trade price and the bid price divided by the distance between the ask price and the bid price. According to this definition, a higher (lower) trade price indicates a larger (smaller) trade location for buyer (seller)-initiated trades. I show the distribution of retail trade locations in Figure 3. In terms of buy trades, we find almost 50% of them tend to cluster just below the best offer price, but still some retail trades are near or even below the NBBO. Similarly, for sell trades, we find almost half of them tend to cluster just above the best bid price, but still some of trades execute near or even above the midpoint price. This may reveal that retail trades are more likely to occur near the best bid or the best offer price, instead of somewhere around the midpoint price.
+
+![Figure 3](images/Figure3.png)
 
 Trade location: Buy and sell trades.
 I now compare the identification rate between the BJZZ (2021) and the midquote assigning methods. I focus on the misidentification rates of the both two methods. For example, the misidentification rate of the BJZZ (2021) algorithm is calculated as the number of retail trades identified by the NBBO midquote assigning fail to be identified by the BJZZ (2021) algorithm relative to the total number of retail trades identified by the NBBO midquote assigning. The misidentification rate of the NBBO midquote assigning is defined analogously. I report the corresponding results in Table 5 where Panel A shows the misidentification rate for BJZZ (2021) algorithm and Panel B shows that for the NBBO midquote assigning. I find that the misidentification rate of BJZZ (2021) algorithm is higher than that of the NBBO miduqote assigning. Speciifcally, the average misidentification rate of BJZZ (2021) is 22% while that for the NBBO miquote assigning method is only 11%. I also summarize the results based on the stock capitalization. I find that the misidentification rate decreases wih the stock capitalization increasing. For the BJZZ (2021) misidentification, the rate decreases from 30% for the highest-cap stocks to 12% for the lowest-cap stocks , while 16% to 8% for the NBBO miduqote assigning method.
@@ -171,11 +175,15 @@ Since the two methods could also identify whether a retail trade is a buyer- or 
 
 Finally, I provide another evidence about the same identified retail trade direction based on the trade location and the result is shown in Figure 4. Consistent to Figures Figure 1 and Figure 2, we find that the two methods perform poorly when retail trades are executed close to the midpoint price, and the average proportion is just above 40%. However, the retail trades that are executed close to either best bid or best offer prices are more likely to be assigned the same trading direction, which is almost 100%.
 
+![Figure 4](images/Figure4.png)
+
 The average proportion of the same identified retail trade direction based on trade location.
 # Conclusions
 Recently, retail trades have received more attention. Due to the democratization of retail trading, especially the popularity of Robinhood app, retail traders now can buy and sell stocks more easily than before with no omission fees. The retail traders’ market orders are not sent to exchanges to get executed, however, they are internalized by the wholesalers that have signed contracts with retail broker-dealers with subpenny price improvements compared to the NBBO. Based on the subpenny characteristics of the retail trades, Boehmer et al. (2021) propose a method to identify retail trades from public data.
 
 Using BJZZ (2021) methods, I successfully identify retail trades from the public data and find most retail trades receive the subpenny price improvements either less than $0.001 or greater than $0.009. This project compares the BJZZ (2021) identification algorithm and the midquote assigning method. I find that these two methods provide similar misidentification rates, while the rate of BJZZ (2021) is slightly higher than that of miquote assigning. However, about 80% of trades can be identified with the same trading direction, and it also depends on the trade location. Retail trades that occur near the NBBO is less likely to be assigned in the same direction from the two methods, compared to other trade locations.
+
+# References
 
 Barber, Brad M., Xing Huang, Philippe Jorion, Terrance Odean, and Christopher Schwarz. 2024. “A (Sub)penny for Your Thoughts: Tracking Retail Investor Activity in TAQ.” Journal of Finance 79: 2403–27.
 
